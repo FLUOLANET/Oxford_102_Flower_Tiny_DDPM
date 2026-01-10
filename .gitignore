@@ -210,3 +210,4 @@ __marimo__/
 **/*.quarto_ipynb
 /docs/
 .DS_Store
+**/.DS_Store
