@@ -4,13 +4,20 @@
     "href": "Oxford_102_Flower_Tiny_DDPM.html",
     "title": "Load Dataset and Preprocess",
     "section": "",
-    "text": "import torch\nfrom torchvision import datasets\nfrom torchvision.transforms import v2\nfrom torch.utils.data import ConcatDataset, DataLoader\nimport matplotlib.pyplot as plt"
+    "text": "import torch\nimport torch.nn as nn\nfrom torchvision import datasets\nfrom torchvision.transforms import v2\nfrom torch.utils.data import ConcatDataset, DataLoader\nimport matplotlib.pyplot as plt"
   },
   {
-    "objectID": "Oxford_102_Flower_Tiny_DDPM.html#diffusion-schedule",
-    "href": "Oxford_102_Flower_Tiny_DDPM.html#diffusion-schedule",
+    "objectID": "Oxford_102_Flower_Tiny_DDPM.html#diffusion-schedule-forward-process",
+    "href": "Oxford_102_Flower_Tiny_DDPM.html#diffusion-schedule-forward-process",
     "title": "Load Dataset and Preprocess",
-    "section": "Diffusion Schedule",
-    "text": "Diffusion Schedule\n일단 Linear만 하고 나중에 Cosine이랑 Offset Cosine 추가"
+    "section": "Diffusion Schedule (Forward Process)",
+    "text": "Diffusion Schedule (Forward Process)\n일단 Linear만 하고 나중에 Cosine이랑 Offset Cosine 추가\nsig_rates^2 + nos_rates^2 = 1\n\ndef linear_diffusion_schedule(T=1000):\n  # beta rates\n  min_beta = 0.0001\n  max_beta = 0.02\n\n  # betas, alphas, alpha_bars\n  betas = torch.linspace(min_beta, max_beta, T)\n  alphas = 1 - betas\n  alpha_bars = torch.cumprod(alphas, dim=0)\n\n  # signal rates, noise rates\n  signal_rates = torch.sqrt(alpha_bars)\n  noise_rates = torch.sqrt(1 - alpha_bars)\n\n  return signal_rates, noise_rates # shape: torch.Size([1000])\n\n\n# visualize signal power & noise power\ntimesteps = torch.linspace(0, 1, 1000)\nsig_rates, nos_rates = linear_diffusion_schedule()\nfig, axes = plt.subplots(1, 2, figsize=(10, 5))\n\n## plot signal power\naxes[0].plot(timesteps, sig_rates**2, color=\"tab:blue\", label=r\"$\\bar{\\alpha_t}$\")\naxes[0].legend()\naxes[0].set_title(\"Signal Power\")\naxes[0].grid(True, alpha=0.2)\n\n## plot noise power\naxes[1].plot(timesteps, nos_rates**2, color=\"tab:red\", label=r\"$1-\\bar{\\alpha_t}$\")\naxes[1].legend()\naxes[1].set_title(\"Noise Power\")\naxes[1].grid(True, alpha=0.2)\n\nplt.tight_layout()\nplt.show()"
+  },
+  {
+    "objectID": "Oxford_102_Flower_Tiny_DDPM.html#model",
+    "href": "Oxford_102_Flower_Tiny_DDPM.html#model",
+    "title": "Load Dataset and Preprocess",
+    "section": "Model",
+    "text": "Model\n\nSinusoidal Embedding\n\n\n\nSinusoidal_Time_Embedding.jpg\n\n\n\n\nResidual Block\n\n\n\nResBlock.jpg\n\n\n\n\nDownSampling & UpSampling\n\n\n\nDownSample.jpg"
   }
 ]
