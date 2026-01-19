@@ -211,3 +211,5 @@ __marimo__/
 /docs/
 .DS_Store
 **/.DS_Store
+
+/data/
