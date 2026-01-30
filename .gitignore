@@ -213,3 +213,6 @@ __marimo__/
 **/.DS_Store
 
 /data/
+a.out
+blog_src/.quarto/
+model.pth
