@@ -216,3 +216,5 @@ __marimo__/
 a.out
 blog_src/.quarto/
 model.pth
+params.pt
+/model/
